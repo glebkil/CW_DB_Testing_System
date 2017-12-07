@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="297.0" prefWidth="513.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cw_db_testing_system.RegistrationFormController">
+   <children>
+      <TextField fx:id="tfLoginForLogin" layoutX="22.0" layoutY="25.0" onAction="#handleLoginBtn" promptText="login" />
+      <PasswordField fx:id="pfPasswordForLogin" layoutX="232.0" layoutY="25.0" onAction="#handleLoginBtn" promptText="password" />
+      <Button fx:id="btnLogin" layoutX="430.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleLoginBtn" text="Log In" />
+      <TextField fx:id="tfFullName" layoutX="305.0" layoutY="96.0" onAction="#handleRegisterBtn" promptText="Full Name" />
+      <TextField fx:id="tfLoginForRegistration" layoutX="305.0" layoutY="144.0" onAction="#handleRegisterBtn" promptText="login" />
+      <PasswordField fx:id="pfPasswordForRegistration" layoutX="305.0" layoutY="192.0" onAction="#handleRegisterBtn" promptText="password" />
+      <Button fx:id="btnRegister" layoutX="418.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleRegisterBtn" text="Register" />
+      <CheckBox fx:id="cbIsTeacher" layoutX="22.0" layoutY="155.0" mnemonicParsing="false" onAction="#handleTeacherCheckBox" text="I'm a teacher" />
+      <PasswordField fx:id="pfTeacherCode" layoutX="22.0" layoutY="198.0" onAction="#handleRegisterBtn" prefHeight="31.0" prefWidth="114.0" promptText="Code" visible="false" />
+      <Label layoutX="22.0" layoutY="67.0" text="Not a member? Create an account!" />
+      <Label fx:id="lbMessage" layoutX="22.0" layoutY="244.0" />
+   </children>
+</AnchorPane>
