@@ -9,6 +9,7 @@ import Model.Test;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import utils.Seance;
@@ -28,7 +29,9 @@ public class TeacherFormController implements Initializable{
     
     @FXML
     public void handleBtnAddNewTest(){        
-        StageConductor.getInstance().BuildStage("TestBuilder.fxml");
+        FXMLLoader loader = StageConductor.getInstance().BuildStage("/cw_db_testing_system/TestBuilder.fxml", "Adding Test");
+        TestBuilderController controller = loader.getController();
+        controller.setTest(new Test());
     }
     
     /**

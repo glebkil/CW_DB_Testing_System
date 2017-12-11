@@ -2,7 +2,9 @@ package Model;
 // Generated Dec 4, 2017 10:13:39 PM by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,12 +24,13 @@ import javax.persistence.Table;
 )
 public class Question  implements java.io.Serializable {
 
-
+     private boolean oneCorrectAnswer;
      private String id;
      private Test test;
      private String text;
      private Byte deleted;
-     private Set<Answer> answers = new HashSet<Answer>(0);
+    // private Set<Answer> answers = new HashSet<Answer>(0);
+     private List<Answer> answers = new ArrayList<Answer>(0);
 
     public Question() {
     }
@@ -38,7 +41,15 @@ public class Question  implements java.io.Serializable {
         this.test = test;
         this.text = text;
     }
-    public Question(String id, Test test, String text, Byte deleted, Set<Answer> answers) {
+//    public Question(String id, Test test, String text, Byte deleted, Set<Answer> answers) {
+//       this.id = id;
+//       this.test = test;
+//       this.text = text;
+//       this.deleted = deleted;
+//       this.answers = answers;
+//    }
+    
+       public Question(String id, Test test, String text, Byte deleted, List<Answer> answers) {
        this.id = id;
        this.test = test;
        this.text = text;
@@ -46,6 +57,14 @@ public class Question  implements java.io.Serializable {
        this.answers = answers;
     }
    
+    public void setOneCorrectAnswer(boolean val){
+        oneCorrectAnswer = val;
+    }
+    
+    public boolean getOneCorrectAnswer(){
+        return oneCorrectAnswer;
+    }
+    
      @Id 
 
     
@@ -88,18 +107,23 @@ public class Question  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
-    public Set<Answer> getAnswers() {
+//@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
+//    public Set<Answer> getAnswers() {
+//        return this.answers;
+//    }
+//    
+//    public void setAnswers(Set<Answer> answers) {
+//        this.answers = answers;
+//    }
+    
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="question")
+    public List<Answer> getAnswers() {
         return this.answers;
     }
     
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
-
-
-
-
 }
 
 

@@ -2,7 +2,9 @@ package Model;
 // Generated Dec 4, 2017 10:13:39 PM by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,8 +30,10 @@ public class Test  implements java.io.Serializable {
      private User user;
      private String title;
      private Byte deleted;
-     private Set<Question> questions = new HashSet<Question>(0);
-     private Set<PassedTest> passedTests = new HashSet<PassedTest>(0);
+//     private Set<Question> questions = new HashSet<Question>(0);
+//     private Set<PassedTest> passedTests = new HashSet<PassedTest>(0);
+     private List<Question> questions = new ArrayList<Question>(0);
+     private List<PassedTest> passedTests = new ArrayList<PassedTest>(0);
 
     public Test() {
     }
@@ -41,7 +45,16 @@ public class Test  implements java.io.Serializable {
         this.user = user;
         this.title = title;
     }
-    public Test(String id, Subject subject, User user, String title, Byte deleted, Set<Question> questions, Set<PassedTest> passedTests) {
+//    public Test(String id, Subject subject, User user, String title, Byte deleted, Set<Question> questions, Set<PassedTest> passedTests) {
+//       this.id = id;
+//       this.subject = subject;
+//       this.user = user;
+//       this.title = title;
+//       this.deleted = deleted;
+//       this.questions = questions;
+//       this.passedTests = passedTests;
+//    }
+        public Test(String id, Subject subject, User user, String title, Byte deleted, List<Question> questions, List<PassedTest> passedTests) {
        this.id = id;
        this.subject = subject;
        this.user = user;
@@ -51,6 +64,7 @@ public class Test  implements java.io.Serializable {
        this.passedTests = passedTests;
     }
    
+    
      @Id 
 
     
@@ -103,24 +117,40 @@ public class Test  implements java.io.Serializable {
         this.deleted = deleted;
     }
 
+//@OneToMany(fetch=FetchType.LAZY, mappedBy="test")
+//    public Set<Question> getQuestions() {
+//        return this.questions;
+//    }
+//    
+//    public void setQuestions(Set<Question> questions) {
+//        this.questions = questions;
+//    }
+//
+//@OneToMany(fetch=FetchType.LAZY, mappedBy="test")
+//    public Set<PassedTest> getPassedTests() {
+//        return this.passedTests;
+//    }
+//    
+//    public void setPassedTests(Set<PassedTest> passedTests) {
+//        this.passedTests = passedTests;
+//    }
 @OneToMany(fetch=FetchType.LAZY, mappedBy="test")
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return this.questions;
     }
     
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="test")
-    public Set<PassedTest> getPassedTests() {
+    public List<PassedTest> getPassedTests() {
         return this.passedTests;
     }
     
-    public void setPassedTests(Set<PassedTest> passedTests) {
+    public void setPassedTests(List<PassedTest> passedTests) {
         this.passedTests = passedTests;
     }
-
 
 
 

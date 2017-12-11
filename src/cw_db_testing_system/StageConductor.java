@@ -17,7 +17,7 @@ import utils.Service;
  *
  * @author Gleb
  */
-public class StageConductor {
+public class StageConductor{
 
     private Stage stage;
     private Scene authentificatinScene = null;
@@ -77,14 +77,19 @@ public class StageConductor {
         session.close();
     }
 
-    public void BuildStage(String fxmlResource) {
+    public FXMLLoader BuildStage(String fxmlResource, String title) {
         try {
             Stage st = new Stage();
-            Scene scene = new Scene(FXMLLoader.load(getClass().getResource(fxmlResource)));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlResource));
+            Scene scene = new Scene(loader.load());
             st.setScene(scene);
-            st.show();
+            st.setTitle(title);
+            st.show();   
+            return loader;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() );
+            e.printStackTrace();
+            return null;
         } 
     }
 }
