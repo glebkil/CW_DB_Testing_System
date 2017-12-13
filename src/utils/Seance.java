@@ -43,12 +43,14 @@ public class Seance {
         User user = srvc.getUserByLogin(login);
         Validator.validateUserPassword(user, password);
         setCurrentUser(user);
-        StageConductor.getInstance().setScene();
+        
+        StageConductor.getInstance().setPrimaryScene();
 
     }
 
     public void LogOut() throws Exception {
         setCurrentUser(null);
-        StageConductor.getInstance().setScene();
+        
+        StageConductor.getInstance().setPrimaryScene();
     }
 }

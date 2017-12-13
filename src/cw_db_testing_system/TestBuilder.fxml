@@ -11,21 +11,28 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.29132231404958675, 0.8636363636363636" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="486.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cw_db_testing_system.TestBuilderController">
+<SplitPane fx:id="spitPane" dividerPositions="0.29132231404958675, 0.8636363636363636" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="486.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <Button layoutX="516.0" layoutY="14.0" mnemonicParsing="false" text="Save Test" />
+            <Button fx:id="btnSaveTest" layoutX="516.0" layoutY="14.0" mnemonicParsing="false" text="Save Test" />
             <ChoiceBox fx:id="cbSubjects" layoutX="108.0" layoutY="14.0" prefWidth="150.0" />
             <Label layoutX="14.0" layoutY="19.0" text="Test Subject:" />
-            <CheckBox fx:id="cbOneCorrectAnswer" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleOneCorrectAnswerCheckBox" selected="true" text="Only one correct answer" />
+            <CheckBox fx:id="cbOneCorrectAnswer" layoutX="14.0" layoutY="102.0" mnemonicParsing="false" selected="true" text="Only one correct answer" />
             <Label layoutX="371.0" layoutY="102.0" text="Pick number of answers:" />
             <ChoiceBox fx:id="cbNumOfAnswers" layoutX="548.0" layoutY="97.0" prefHeight="31.0" prefWidth="55.0" />
-            <Button layoutX="275.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddSubject" text="Add subject" />
+            <Button fx:id="btnAddSubject" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" text="Add subject" />
+            <Label layoutX="14.0" layoutY="65.0" text="Test title:" />
+            <TextField fx:id="tfTestTitle" layoutX="110.0" layoutY="60.0" promptText="Input test title" />
+            <Button fx:id="btnRefresh" layoutX="387.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="269.0" prefWidth="712.0">
          <children>
             <TextArea fx:id="taQuestionText" layoutX="14.0" layoutY="14.0" prefHeight="54.0" prefWidth="592.0" promptText="Enter the text of the question" />
+            <TextField fx:id="tfAnswer1" layoutX="49.0" layoutY="76.0" prefHeight="31.0" prefWidth="557.0" promptText="First answer" />
+            <TextField fx:id="tfAnswer2" layoutX="49.0" layoutY="119.0" prefHeight="31.0" prefWidth="557.0" promptText="Second answer" />
+            <TextField fx:id="tfAnswer3" layoutX="49.0" layoutY="161.0" prefHeight="31.0" prefWidth="557.0" promptText="Third answer" />
+            <TextField fx:id="tfAnswer4" layoutX="49.0" layoutY="204.0" prefHeight="31.0" prefWidth="557.0" promptText="Fourth answer" />
             <CheckBox fx:id="cb1" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" selected="true" visible="false" />
             <RadioButton fx:id="rb1" layoutX="15.0" layoutY="81.0" mnemonicParsing="false" selected="true">
                <toggleGroup>
@@ -38,16 +45,12 @@
             <RadioButton fx:id="rb2" layoutX="15.0" layoutY="122.0" mnemonicParsing="false" toggleGroup="$options" />
             <RadioButton fx:id="rb3" layoutX="15.0" layoutY="166.0" mnemonicParsing="false" toggleGroup="$options" />
             <RadioButton fx:id="rb4" layoutX="15.0" layoutY="209.0" mnemonicParsing="false" toggleGroup="$options" />
-            <TextField fx:id="tfAnswer2" layoutX="49.0" layoutY="119.0" prefHeight="31.0" prefWidth="557.0" promptText="Second answer" />
-            <TextField fx:id="tfAnswer3" layoutX="49.0" layoutY="161.0" prefHeight="31.0" prefWidth="557.0" promptText="Third answer" />
-            <TextField fx:id="tfAnswer4" layoutX="49.0" layoutY="204.0" prefHeight="31.0" prefWidth="557.0" promptText="Fourth answer" />
-            <TextField fx:id="tfAnswer1" layoutX="49.0" layoutY="76.0" prefHeight="31.0" prefWidth="557.0" promptText="First answer" />
-            <Label fx:id="lbErrorMessage" layoutX="290.0" layoutY="245.0" />
+            <Label fx:id="lbErrorMessage" layoutX="44.0" layoutY="245.0" prefHeight="21.0" prefWidth="557.0" />
          </children></AnchorPane>
       <AnchorPane prefHeight="93.0" prefWidth="676.0">
          <children>
-            <Button fx:id="btnNext" layoutX="548.0" layoutY="16.0" mnemonicParsing="false" onAction="#handleNextButton" text="Next" />
-            <Button fx:id="btnPrevious" disable="true" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#handlePreviousButton" text="Previous" />
+            <Button fx:id="btnNext" layoutX="548.0" layoutY="16.0" mnemonicParsing="false" text="Next" />
+            <Button fx:id="btnPrevious" disable="true" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" text="Previous" />
             <Label fx:id="lbQuestionNumber" layoutX="265.0" layoutY="23.0" text="Question 1" />
          </children>
       </AnchorPane>

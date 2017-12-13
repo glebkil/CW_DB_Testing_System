@@ -2,7 +2,8 @@ package Model;
 // Generated Dec 4, 2017 10:13:39 PM by Hibernate Tools 4.3.1
 
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Group  implements java.io.Serializable {
      private String id;
      private String name;
      private Byte deleted;
-     private Set<User> users = new HashSet<User>(0);
+     private List<User> users = new ArrayList<User>(0);
 
     public Group() {
     }
@@ -34,11 +35,10 @@ public class Group  implements java.io.Serializable {
         this.id = id;
         this.name = name;
     }
-    public Group(String id, String name, Byte deleted, Set<User> users) {
+    public Group(String id, String name, Byte deleted) {
        this.id = id;
        this.name = name;
        this.deleted = deleted;
-       this.users = users;
     }
    
      @Id 
@@ -74,11 +74,11 @@ public class Group  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="group")
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return this.users;
     }
     
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

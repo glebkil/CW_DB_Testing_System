@@ -8,6 +8,7 @@ package cw_db_testing_system;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import utils.Seance;
@@ -17,9 +18,9 @@ import utils.Service;
  *
  * @author Gleb
  */
-public class StageConductor{
+public class StageConductor {
 
-    private Stage stage;
+    private Stage primaryStage;
     private Scene authentificatinScene = null;
     private Scene studentFormScene = null;
     private Scene teacherFormScene = null;
@@ -27,7 +28,7 @@ public class StageConductor{
     private static StageConductor instance;
 
     private StageConductor(Stage stage) {
-        this.stage = stage;
+        this.primaryStage = stage;
     }
 
     public static void initStageController(Stage st) {
@@ -40,9 +41,14 @@ public class StageConductor{
         return instance;
     }
 
-    public void setScene() throws Exception {
-        Service service = Service.getInstane();
-        Session session = Service.getSessionFactory().openSession();
+    private void setIcon(Stage st) {
+        st.getIcons().add(new Image("file:C:\\Projects\\NetBeans\\CW_DB_Testing_System\\src\\resources\\icon.png"));
+    }
+
+    public void setPrimaryScene() throws Exception {
+        //Service service = Service.getInstane();
+        //Session session = Service.getSessionFactory().openSession();
+        setIcon(primaryStage);
         Seance seance = Seance.getInstance();
         if (seance.getCurrentUser() == null) {
             if (authentificatinScene == null) {
@@ -50,46 +56,69 @@ public class StageConductor{
                         .load(getClass()
                                 .getResource("RegistrationForm.fxml")));
             }
-            stage.setScene(authentificatinScene);
+            primaryStage.setScene(authentificatinScene);
+            primaryStage.setTitle("Authentification");
         } else if (seance.getCurrentUser().getRole().getName().equals("student")) {
             if (studentFormScene == null) {
                 studentFormScene = new Scene(FXMLLoader
                         .load(getClass()
                                 .getResource("studentForm.fxml")));
             }
-            stage.setScene(studentFormScene);
+            primaryStage.setScene(studentFormScene);
+            primaryStage.setTitle("Student panel");
         } else if (seance.getCurrentUser().getRole().getName().equals("teacher")) {
             if (teacherFormScene == null) {
                 teacherFormScene = new Scene(FXMLLoader
                         .load(getClass()
                                 .getResource("teacherForm.fxml")));
             }
-            stage.setScene(teacherFormScene);
+            primaryStage.setScene(teacherFormScene);
+            primaryStage.setTitle("Teacher panel");
         } else if (seance.getCurrentUser().getRole().getName().equals("admin")) {
             if (adminFormScene == null) {
                 adminFormScene = new Scene(FXMLLoader
                         .load(getClass()
                                 .getResource("adminForm.fxml")));
             }
-            stage.setScene(adminFormScene);
+            primaryStage.setScene(adminFormScene);
+            primaryStage.setTitle("Admin panel");
         }
-        stage.show();
-        session.close();
+        primaryStage.show();
+        //session.close();
     }
 
     public FXMLLoader BuildStage(String fxmlResource, String title) {
+        FXMLLoader loader = null;
         try {
             Stage st = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlResource));
+            setIcon(st);
+            loader = new FXMLLoader(getClass().getResource(fxmlResource));
             Scene scene = new Scene(loader.load());
             st.setScene(scene);
             st.setTitle(title);
-            st.show();   
+            st.show();
             return loader;
         } catch (Exception e) {
-            System.out.println(e.getMessage() );
+            System.out.println(e.getMessage());
             e.printStackTrace();
-            return null;
-        } 
+            return loader;
+        }
+    }
+
+    public void BuildStageWithController(String fxmlResource, String title, Object controller) {
+        FXMLLoader loader = null;
+        try {
+            Stage st = new Stage();
+            setIcon(st);
+            loader = new FXMLLoader(getClass().getResource(fxmlResource));
+            loader.setController(controller);
+            Scene scene = new Scene(loader.load());
+            st.setScene(scene);
+            st.setTitle(title);
+            st.show();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

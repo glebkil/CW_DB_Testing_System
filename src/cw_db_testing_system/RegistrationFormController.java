@@ -66,6 +66,7 @@ public class RegistrationFormController implements Initializable {
             lbMessage.setText(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -109,7 +110,12 @@ public class RegistrationFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        tfLoginForLogin.setText("");
+        pfPasswordForLogin.setText("");
+        tfFullName.setText("");
+        tfLoginForRegistration.setText("");
+        pfPasswordForRegistration.setText("");
+        cbIsTeacher.setSelected(false);
     }
     
 }

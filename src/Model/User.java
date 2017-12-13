@@ -1,8 +1,9 @@
 package Model;
 // Generated Dec 4, 2017 10:13:39 PM by Hibernate Tools 4.3.1
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,23 +30,33 @@ public class User implements java.io.Serializable {
     private String login;
     private String password;
     private String name;
-    private Byte deleted;
-    private Set<Test> tests = new HashSet<Test>(0);
-    private Set<PassedTest> passedTests = new HashSet<PassedTest>(0);
+//    private Byte deleted;
+    private boolean deleted;
+    private List<Test> tests = new ArrayList<Test>(0);
+    private List<PassedTest> passedTests = new ArrayList<PassedTest>(0);
 
     public User() {
     }
 
-    public User(String id, Role role, String login, String password, String name) {
+//    public User(String id, Role role, String login, String password, String name) {
+//        this.id = id;
+//        this.role = role;
+//        this.login = login;
+//        this.password = password;
+//        this.name = name;
+//        this.deleted = 0;
+//    }
+    
+       public User(String id, Role role, String login, String password, String name) {
         this.id = id;
         this.role = role;
         this.login = login;
         this.password = password;
         this.name = name;
-        this.deleted = 0;
+        this.deleted = false;
     }
 
-    public User(String id, Group group, Role role, String login, String password, String name, Byte deleted, Set<Test> tests, Set<PassedTest> passedTests) {
+    public User(String id, Group group, Role role, String login, String password, String name, boolean deleted) {
         this.id = id;
         this.group = group;
         this.role = role;
@@ -53,8 +64,6 @@ public class User implements java.io.Serializable {
         this.password = password;
         this.name = name;
         this.deleted = deleted;
-        this.tests = tests;
-        this.passedTests = passedTests;
     }
 
     @Id
@@ -115,30 +124,39 @@ public class User implements java.io.Serializable {
         this.name = name;
     }
 
-    @Column(name = "deleted")
-    public Byte getDeleted() {
+//    @Column(name = "deleted")
+//    public Byte getDeleted() {
+//        return this.deleted;
+//    }
+//
+//    public void setDeleted(Byte deleted) {
+//        this.deleted = deleted;
+//    }
+    
+        @Column(name = "deleted")
+    public boolean getDeleted() {
         return this.deleted;
     }
 
-    public void setDeleted(Byte deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<Test> getTests() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.ALL})
+    public List<Test> getTests() {
         return this.tests;
     }
 
-    public void setTests(Set<Test> tests) {
+    public void setTests(List<Test> tests) {
         this.tests = tests;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<PassedTest> getPassedTests() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.ALL})
+    public List<PassedTest> getPassedTests() {
         return this.passedTests;
     }
 
-    public void setPassedTests(Set<PassedTest> passedTests) {
+    public void setPassedTests(List<PassedTest> passedTests) {
         this.passedTests = passedTests;
     }
 

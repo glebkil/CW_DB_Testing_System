@@ -3,6 +3,7 @@ package Model;
 
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,7 +53,7 @@ public class PassedTest  implements java.io.Serializable {
         this.id = id;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="test_id", nullable=false)
     public Test getTest() {
         return this.test;
@@ -62,7 +63,7 @@ public class PassedTest  implements java.io.Serializable {
         this.test = test;
     }
 
-@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="student_id", nullable=false)
     public User getUser() {
         return this.user;

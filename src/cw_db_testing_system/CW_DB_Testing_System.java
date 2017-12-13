@@ -23,7 +23,7 @@ public class CW_DB_Testing_System extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initStageController(stage);
-        StageConductor.getInstance().setScene();
+        StageConductor.getInstance().setPrimaryScene();
     }
 
     @Override

@@ -2,7 +2,9 @@ package Model;
 // Generated Dec 4, 2017 10:13:39 PM by Hibernate Tools 4.3.1
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,27 +23,19 @@ import javax.persistence.Table;
 public class Role  implements java.io.Serializable {
 
 
-     private String id;
-     private String name;
-     private Set<User> users = new HashSet<User>(0);
+    private String id;
+    private String name;
+    private List<User> users = new ArrayList<User>(0);
 
     public Role() {
     }
 
-	
     public Role(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-    public Role(String id, String name, Set<User> users) {
        this.id = id;
        this.name = name;
-       this.users = users;
     }
    
-     @Id 
-
-    
+    @Id
     @Column(name="id", unique=true, nullable=false, length=36)
     public String getId() {
         return this.id;
@@ -62,11 +56,11 @@ public class Role  implements java.io.Serializable {
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="role")
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return this.users;
     }
     
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 
