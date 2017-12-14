@@ -53,7 +53,7 @@ public class PassedTest  implements java.io.Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="test_id", nullable=false)
     public Test getTest() {
         return this.test;
@@ -63,7 +63,7 @@ public class PassedTest  implements java.io.Serializable {
         this.test = test;
     }
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="student_id", nullable=false)
     public User getUser() {
         return this.user;

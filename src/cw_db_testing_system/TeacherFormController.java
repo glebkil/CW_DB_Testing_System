@@ -23,11 +23,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.Seance;
 import utils.Service;
+import utils.TestDataObserver;
 
 /**
  * FXML Controller class
@@ -44,9 +47,36 @@ public class TeacherFormController implements Initializable {
 
     @FXML
     private TableColumn<TestDataObserver, String> tcTitle;
+    
+    @FXML
+    private Button btnRefresh;
+
+    ObservableList<TestDataObserver> observableTests;
+
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //Table
+        observableTests = FXCollections.observableArrayList();
+        tcSubject.setCellValueFactory(new PropertyValueFactory<>("testSubject"));
+        tcTitle.setCellValueFactory(new PropertyValueFactory<>("testTitle"));
+
+        List<Test> tests = Service.getInstane().getTests();
+        for (Test t : tests) {
+            observableTests.add(new TestDataObserver(t));
+        }
+        tvTestsTable.setItems(observableTests);
+        tvTestsTable.getColumns().clear();
+        tvTestsTable.getColumns().addAll(tcSubject, tcTitle);
+    }
 
     @FXML
-    private void handleBtnLogout() throws Exception {
+    private void handleBtnLogout() {
         Seance.getInstance().LogOut();
     }
 
@@ -54,10 +84,33 @@ public class TeacherFormController implements Initializable {
     private void handleBtnAddNewTest() {
         StageConductor
                 .getInstance()
-                .BuildStageWithController("/cw_db_testing_system/TestBuilder.fxml", "Adding Test", new TestBuilderController(new Test()));
+                .BuildSceneOnNewStage("/cw_db_testing_system/TestBuilder.fxml", "Adding Test", new TestBuilderController(new Test()));
 
     }
 
+    @FXML
+    private void handleBtnDeleteSelected(){
+        TestDataObserver tdo = tvTestsTable.getSelectionModel().getSelectedItem();
+        if (tdo == null) {
+            return;
+        }
+        Session session = Service.getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+        Test selectedTest = (Test) session.get(Test.class, tdo.getId());
+//        Hibernate.initialize(selectedTest.getPassedTests());
+//        Hibernate.initialize(selectedTest.getQuestions());
+//
+//        List<Question> ql = selectedTest.getQuestions();
+//        for (Question q : ql) {
+//            Hibernate.initialize(q.getAnswers());
+//        }
+        selectedTest.setDeleted(true);
+        session.update(selectedTest);
+        tx.commit();
+        session.close();
+        handleBtnRefresh();
+    }
+    
     @FXML
     private void handleBtnEditSelected() {
         TestDataObserver tdo = tvTestsTable.getSelectionModel().getSelectedItem();
@@ -76,7 +129,7 @@ public class TeacherFormController implements Initializable {
         session.close();
         StageConductor
                 .getInstance()
-                .BuildStageWithController("/cw_db_testing_system/TestBuilder.fxml", "Adding Test", new TestBuilderController(selectedTest));
+                .BuildSceneOnNewStage("/cw_db_testing_system/TestBuilder.fxml", "Adding Test", new TestBuilderController(selectedTest));
 
     }
 
@@ -88,62 +141,4 @@ public class TeacherFormController implements Initializable {
             observableTests.add(new TestDataObserver(t));
         }
     }
-
-    ObservableList<TestDataObserver> observableTests;
-
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        observableTests = FXCollections.observableArrayList();
-        tcSubject.setCellValueFactory(new PropertyValueFactory<>("testSubject"));
-        tcTitle.setCellValueFactory(new PropertyValueFactory<>("testTitle"));
-
-        List<Test> tests = Service.getInstane().getTests();
-        for (Test t : tests) {
-            observableTests.add(new TestDataObserver(t));
-        }
-        tvTestsTable.setItems(observableTests);
-        tvTestsTable.getColumns().clear();
-        tvTestsTable.getColumns().addAll(tcSubject, tcTitle);
-    }
-
-    public class TestDataObserver {
-
-        private String testTitle;
-        private String testSubject;
-        private String id;
-
-        public TestDataObserver(Test test) {
-            testTitle = test.getTitle();
-            testSubject = test.getSubject().getTitle();
-            id = test.getId();
-        }
-
-        public String getTestTitle() {
-            return testTitle;
-        }
-
-        public String getTestSubject() {
-            return testSubject;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setTestTitle(String testTitle) {
-            this.testTitle = testTitle;
-        }
-
-        public void setTestSubject(String testSubject) {
-            this.testSubject = testSubject;
-        }
-
-    }
-
 }

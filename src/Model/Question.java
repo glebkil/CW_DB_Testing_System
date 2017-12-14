@@ -41,14 +41,14 @@ public class Question implements java.io.Serializable {
     }
 
     @Transient
-    public boolean getHasOnlyOneCorrectAnswerOrNoAnswersYet() {        
+    public boolean getHasOnlyOneCorrectAnswer() {        
         int correct_ans_count = 0;
         for(Answer ans : answers){
             if(ans.getIsCorrect()){
                 correct_ans_count++;
             }
         }
-        return correct_ans_count <= 1;
+        return correct_ans_count == 1;
     }
     
     @Transient

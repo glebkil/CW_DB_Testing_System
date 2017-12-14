@@ -30,7 +30,6 @@ public class User implements java.io.Serializable {
     private String login;
     private String password;
     private String name;
-//    private Byte deleted;
     private boolean deleted;
     private List<Test> tests = new ArrayList<Test>(0);
     private List<PassedTest> passedTests = new ArrayList<PassedTest>(0);
@@ -38,14 +37,6 @@ public class User implements java.io.Serializable {
     public User() {
     }
 
-//    public User(String id, Role role, String login, String password, String name) {
-//        this.id = id;
-//        this.role = role;
-//        this.login = login;
-//        this.password = password;
-//        this.name = name;
-//        this.deleted = 0;
-//    }
     
        public User(String id, Role role, String login, String password, String name) {
         this.id = id;
@@ -54,16 +45,6 @@ public class User implements java.io.Serializable {
         this.password = password;
         this.name = name;
         this.deleted = false;
-    }
-
-    public User(String id, Group group, Role role, String login, String password, String name, boolean deleted) {
-        this.id = id;
-        this.group = group;
-        this.role = role;
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.deleted = deleted;
     }
 
     @Id
@@ -123,15 +104,6 @@ public class User implements java.io.Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-//    @Column(name = "deleted")
-//    public Byte getDeleted() {
-//        return this.deleted;
-//    }
-//
-//    public void setDeleted(Byte deleted) {
-//        this.deleted = deleted;
-//    }
     
         @Column(name = "deleted")
     public boolean getDeleted() {

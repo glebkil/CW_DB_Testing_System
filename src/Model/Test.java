@@ -38,6 +38,16 @@ public class Test implements java.io.Serializable {
     public Test() {
     }
 
+    public Test(Test t){
+        id = t.getId();
+        subject = t.getSubject();
+        user = t.getUser();
+        title = t.getTitle();
+        deleted = t.deleted;
+        questions = t.getQuestions();
+        passedTests = t.getPassedTests();
+    }
+    
     public Test(Subject subject, User user, String title) {
         this.id = randomUUID().toString();
         this.subject = subject;

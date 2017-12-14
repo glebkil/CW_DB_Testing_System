@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<SplitPane fx:id="spitPane" dividerPositions="0.20207253886010362, 0.8393782383419689" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="388.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="614.0">
+         <children>
+            <Button fx:id="btnFinishTest" layoutX="516.0" layoutY="14.0" mnemonicParsing="false" text="Finish Test" />
+            <Label layoutX="14.0" layoutY="49.0" text="Subject:" />
+            <Label layoutX="14.0" layoutY="19.0" text="Test title:" />
+            <Label fx:id="lbTitle" layoutX="93.0" layoutY="19.0" prefHeight="21.0" prefWidth="409.0" text="Label" />
+            <Label fx:id="lbSubject" layoutX="93.0" layoutY="49.0" prefHeight="21.0" prefWidth="409.0" text="Label" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="269.0" prefWidth="712.0">
+         <children>
+            <TextArea fx:id="taQuestionText" editable="false" layoutX="14.0" layoutY="3.0" prefHeight="74.0" prefWidth="592.0" />
+            <CheckBox fx:id="cb1" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" selected="true" visible="false" />
+            <RadioButton fx:id="rb1" layoutX="15.0" layoutY="81.0" mnemonicParsing="false" selected="true">
+               <toggleGroup>
+                  <ToggleGroup fx:id="options" />
+               </toggleGroup>
+            </RadioButton>
+            <CheckBox fx:id="cb2" layoutX="14.0" layoutY="124.0" mnemonicParsing="false" visible="false" />
+            <CheckBox fx:id="cb3" layoutX="14.0" layoutY="166.0" mnemonicParsing="false" visible="false" />
+            <CheckBox fx:id="cb4" layoutX="14.0" layoutY="209.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="28.0" visible="false" />
+            <RadioButton fx:id="rb2" layoutX="15.0" layoutY="122.0" mnemonicParsing="false" toggleGroup="$options" />
+            <RadioButton fx:id="rb3" layoutX="15.0" layoutY="166.0" mnemonicParsing="false" toggleGroup="$options" />
+            <RadioButton fx:id="rb4" layoutX="15.0" layoutY="209.0" mnemonicParsing="false" toggleGroup="$options" />
+            <Label fx:id="lbAnswer1" layoutX="42.0" layoutY="81.0" prefHeight="21.0" prefWidth="564.0" text="Label" />
+            <Label fx:id="lbAnswer2" layoutX="42.0" layoutY="122.0" prefHeight="21.0" prefWidth="564.0" text="Label" />
+            <Label fx:id="lbAnswer3" layoutX="42.0" layoutY="166.0" prefHeight="21.0" prefWidth="564.0" text="Label" />
+            <Label fx:id="lbAnswer4" layoutX="42.0" layoutY="209.0" prefHeight="21.0" prefWidth="564.0" text="Label" />
+         </children></AnchorPane>
+      <AnchorPane prefHeight="58.0" prefWidth="614.0">
+         <children>
+            <Button fx:id="btnNext" layoutX="548.0" layoutY="16.0" mnemonicParsing="false" text="Next" />
+            <Button fx:id="btnPrevious" disable="true" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" text="Previous" />
+            <Label fx:id="lbQuestionNumber" layoutX="265.0" layoutY="23.0" text="Question 1" />
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>

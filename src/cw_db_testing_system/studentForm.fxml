@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cw_db_testing_system.StudentFormController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cw_db_testing_system.StudentFormController">
    <children>
-      <Label layoutX="222.0" layoutY="119.0" text="studentform)" />
-      <Button fx:id="btnLogout" layoutX="233.0" layoutY="185.0" mnemonicParsing="false" onAction="#handlerLogoutBtn" text="Log Out" />
+      <TabPane layoutX="-1.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Tests">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnLogout" layoutX="512.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnLogout" text="Log Out" />
+                        <Button fx:id="btnStartTest" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnStartTest" text="Start Test" />
+                        <TableView fx:id="tvTestsTable" layoutX="14.0" layoutY="59.0" prefHeight="288.0" prefWidth="578.0">
+                          <columns>
+                            <TableColumn fx:id="tcSubject" prefWidth="94.0" text="Subject" />
+                            <TableColumn fx:id="tcTitle" prefWidth="483.0" text="Title" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnRefresh" layoutX="125.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnRefresh" text="Refresh" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Test stats">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnLogout1" layoutX="512.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnLogout" text="Log Out" />
+                        <TableView fx:id="tvptTestsTable" layoutX="14.0" layoutY="59.0" prefHeight="288.0" prefWidth="578.0">
+                           <columns>
+                              <TableColumn fx:id="tcptSubject" prefWidth="94.0" text="Subject" />
+                              <TableColumn fx:id="tcptTitle" prefWidth="245.0" text="Title" />
+                              <TableColumn fx:id="tcptDateTime" prefWidth="155.0" text="Date&amp;Time" />
+                              <TableColumn fx:id="tcptMark" prefWidth="83.0" text="Mark" />
+                           </columns>
+                        </TableView>
+                        <Button fx:id="btnSeeTestStats1" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnSeetestStats" text="See Test Stat" />
+                        <Button fx:id="btnRefresh1" layoutX="132.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnRefresh" text="Refresh" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

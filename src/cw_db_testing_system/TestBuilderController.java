@@ -85,11 +85,43 @@ public class TestBuilderController implements Initializable {
     private Question currentQuestion;
     private int currentQuestionNumber;
 
-    @FXML
-    private void handleRefreshButton(ActionEvent e){
-        
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //0. Basic form-specific setup
+        initHandlers();
+        cbSubjects.setTooltip(new Tooltip("Select the subject of your test"));
+
+        //1. Add subjects 
+        populateSubjectsChoiceBox();
+
+        //2. Setting current question
+        currentQuestionNumber = 0;
+
+        //3. Populating choicebox of number of answers            
+        cbNumOfAnswers.getItems().addAll(2, 3, 4);
+        cbNumOfAnswers.getSelectionModel().selectLast();
+
+        //4. Initing current question
+        initCurrentQuestion();
+
+        //5. Initing form
+        initForm();
     }
-    
+
+    @FXML
+    private void handleRefreshButton(ActionEvent e) {
+        List<Subject> subjects = Service.getInstane().getSubjects();
+        ArrayList<String> subjectNames = new ArrayList<String>();
+        if (subjects != null) {
+            for (Subject subject : (List<Subject>) subjects) {
+                subjectNames.add(subject.getTitle());
+            }
+            ObservableList<String> ol = FXCollections.observableArrayList(subjectNames);
+            cbSubjects.setItems(ol);
+            cbSubjects.getSelectionModel().selectFirst();
+        }
+    }
+
     @FXML
     private void handleSaveTestButton(ActionEvent e) {
         //0. Check if everything has values
@@ -97,7 +129,7 @@ public class TestBuilderController implements Initializable {
         lbErrorMessage.setText("");
         if (tfTestTitle.getText() == null) {
             lbErrorMessage.setTextFill(Color.web("#911111"));
-            lbErrorMessage.setText("Looks like you have not added a test title");            
+            lbErrorMessage.setText("Looks like you have not added a test title");
             return;
         }
         for (Question q : test.getQuestions()) {
@@ -163,7 +195,7 @@ public class TestBuilderController implements Initializable {
 
     @FXML
     private void handleAddSubject(ActionEvent e) {
-        StageConductor.getInstance().BuildStage("AddingSubject.fxml", "Adding subject");
+        StageConductor.getInstance().BuildSceneOnNewStage("AddingSubject.fxml", "Adding subject");
     }
 
     @FXML
@@ -193,86 +225,73 @@ public class TestBuilderController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //0. Basic form-specific setup
-        setHandlers();
-        cbSubjects.setTooltip(new Tooltip("Select the subject of your test"));
-
-        //1. Add subjects 
-        populateSubjectsChoiceBox();
-
-        //2. Setting current question
-        currentQuestionNumber = 0;
-
-        //3. Populating choicebox of number of answers            
-        cbNumOfAnswers.getItems().addAll(2, 3, 4);
-        cbNumOfAnswers.getSelectionModel().selectLast();
-
-        //4. Initing current question
-        initCurrentQuestion();
-
-        //5. Initing form
-        initForm();
-    }
-
-    private void eraseErrorMessage(KeyEvent e){
+    private void eraseErrorMessage(KeyEvent e) {
         lbErrorMessage.setText("");
     }
-    
+
     private void initForm() {
         //0. Empty all question fields
         setAllQuestionFieldsEmpty();
 
-        //1. Init label
+        //1. Init question number label
         lbQuestionNumber.setText("Question" + (currentQuestionNumber + 1));
 
         //2. Init proper number of options and their type
         cbNumOfAnswers.getSelectionModel().select((Integer) currentQuestion.getAnswers().size());
-        boolean temp = currentQuestion.getHasOnlyOneCorrectAnswerOrNoAnswersYet();
-        cbOneCorrectAnswer.setSelected(temp);
+
+        cbOneCorrectAnswer.setSelected(currentQuestion.getHasOnlyOneCorrectAnswer()
+                || currentQuestion.getHasNoCorrectAnswers());
         SetAnswersVisibility();
 
+        if (currentQuestion.getAnswers().size() != 0) {
+            taQuestionText.setText(currentQuestion.getText());
+
+            tfAnswer1.setText(currentQuestion.getAnswers().get(0).getText());
+            tfAnswer2.setText(currentQuestion.getAnswers().get(1).getText());
+            if (currentQuestion.getAnswers().size() > 2) {
+                tfAnswer3.setText(currentQuestion.getAnswers().get(2).getText());
+            }
+            if (currentQuestion.getAnswers().size() > 3) {
+                tfAnswer4.setText(currentQuestion.getAnswers().get(3).getText());
+            }
+
+            //4. Init correct answer(s)
+            if (currentQuestion.getHasOnlyOneCorrectAnswer()) {
+                rb1.setSelected(currentQuestion.getAnswers().get(0).getIsCorrect());
+
+                rb2.setSelected(currentQuestion.getAnswers().get(1).getIsCorrect());
+
+                if (currentQuestion.getAnswers().size() > 2) {
+                    rb3.setSelected(currentQuestion.getAnswers().get(2).getIsCorrect());
+                }
+                if (currentQuestion.getAnswers().size() > 3) {
+                    rb4.setSelected(currentQuestion.getAnswers().get(3).getIsCorrect());
+                }
+            } else {
+                cb1.setSelected(currentQuestion.getAnswers().get(0).getIsCorrect());
+
+                cb2.setSelected(currentQuestion.getAnswers().get(1).getIsCorrect());
+
+                if (currentQuestion.getAnswers().size() > 2) {
+                    cb3.setSelected(currentQuestion.getAnswers().get(2).getIsCorrect());
+                }
+                if (currentQuestion.getAnswers().size() > 3) {
+                    cb4.setSelected(currentQuestion.getAnswers().get(3).getIsCorrect());
+                }
+            }
+        }
         //3. Init question text and all the options
-        taQuestionText.setText(currentQuestion.getText());
-        tfAnswer1.setText(currentQuestion.getAnswers().get(0).getText());
-        tfAnswer2.setText(currentQuestion.getAnswers().get(1).getText());
-        if (currentQuestion.getAnswers().size() > 2) {
-            tfAnswer3.setText(currentQuestion.getAnswers().get(2).getText());
-        }
-        if (currentQuestion.getAnswers().size() > 3) {
-            tfAnswer4.setText(currentQuestion.getAnswers().get(3).getText());
-        }
 
-        //4. Init correct answer(s)
-        if (currentQuestion.getHasOnlyOneCorrectAnswerOrNoAnswersYet()) {
-            rb1.setSelected(currentQuestion.getAnswers().get(0).getIsCorrect());
-
-            rb2.setSelected(currentQuestion.getAnswers().get(1).getIsCorrect());
-
-            if (currentQuestion.getAnswers().size() > 2) {
-                rb3.setSelected(currentQuestion.getAnswers().get(2).getIsCorrect());
-            }
-            if (currentQuestion.getAnswers().size() > 3) {
-                rb4.setSelected(currentQuestion.getAnswers().get(3).getIsCorrect());
-            }
-        } else {
-            cb1.setSelected(currentQuestion.getAnswers().get(0).getIsCorrect());
-
-            cb2.setSelected(currentQuestion.getAnswers().get(1).getIsCorrect());
-
-            if (currentQuestion.getAnswers().size() > 2) {
-                cb3.setSelected(currentQuestion.getAnswers().get(2).getIsCorrect());
-            }
-            if (currentQuestion.getAnswers().size() > 3) {
-                cb4.setSelected(currentQuestion.getAnswers().get(3).getIsCorrect());
-            }
-        }
         //5. Init test title
         tfTestTitle.setText(test.getTitle());
+
+        //6. Init subject box
+        if (test.getSubject() != null) {
+            cbSubjects.getSelectionModel().select(test.getSubject().getTitle());
+        }
     }
 
-    private void setHandlers() {
+    private void initHandlers() {
         cbOneCorrectAnswer.setOnAction((event) -> {
             handleOneCorrectAnswerCheckBox(event);
         });
@@ -298,19 +317,19 @@ public class TestBuilderController implements Initializable {
         tfAnswer1.setOnKeyPressed((event) -> {
             eraseErrorMessage(event);
         });
-         tfAnswer2.setOnKeyPressed((event) -> {
+        tfAnswer2.setOnKeyPressed((event) -> {
             eraseErrorMessage(event);
         });
-          tfAnswer3.setOnKeyPressed((event) -> {
+        tfAnswer3.setOnKeyPressed((event) -> {
             eraseErrorMessage(event);
         });
-           tfAnswer4.setOnKeyPressed((event) -> {
+        tfAnswer4.setOnKeyPressed((event) -> {
             eraseErrorMessage(event);
         });
-           btnRefresh.setOnKeyPressed((event) -> {
+        btnRefresh.setOnAction((event) -> {
             handleRefreshButton(event);
         });
-           
+
         cbNumOfAnswers.getSelectionModel()
                 .selectedItemProperty()
                 .addListener((obs, oldV, newV) -> SetAnswersVisibility());
@@ -318,9 +337,9 @@ public class TestBuilderController implements Initializable {
 
     private void saveCurentQuestionData() {
         currentQuestion.setText(taQuestionText.getText());
+        test.setTitle(tfTestTitle.getText());
 
         ArrayList<Answer> newAnswers = new ArrayList<>();
-
         if (cbOneCorrectAnswer.isSelected()) {
             newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer1.getText(), rb1.isSelected()));
             newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer2.getText(), rb2.isSelected()));
@@ -341,6 +360,19 @@ public class TestBuilderController implements Initializable {
             }
         }
 
+        Session session = Service.getSessionFactory().openSession();
+
+        Transaction tx = session.beginTransaction();
+        List<Answer> answers = currentQuestion.getAnswers();
+        for (Answer a : answers) {
+            Answer tempAns = (Answer) session.get(Answer.class, a.getId());
+            if (tempAns != null) {
+                session.delete(tempAns);
+            }
+        }
+        tx.commit();
+        session.close();
+
         currentQuestion.setAnswers(newAnswers);
     }
 
@@ -354,13 +386,14 @@ public class TestBuilderController implements Initializable {
     private void addNewQuestionToTest() {
         Question addedQuestion = new Question();
         test.getQuestions().add(addedQuestion);
-        //test.getQuestions().get(currentQuestionNumber)
-        //       .setAnswers(new ArrayList<Answer>());
         addedQuestion.setTest(test);
         addedQuestion.setId(randomUUID().toString());
         addedQuestion.setDeleted(false);
         for (int i = 0; i < cbNumOfAnswers.getSelectionModel().getSelectedItem(); i++) {
-            addedQuestion.getAnswers().add(new Answer());
+            Answer ans = new Answer();
+            ans.setId(randomUUID().toString());
+            ans.setQuestion(addedQuestion);
+            addedQuestion.getAnswers().add(ans);
         }
     }
 

@@ -23,7 +23,7 @@
             <ChoiceBox fx:id="cbNumOfAnswers" layoutX="548.0" layoutY="97.0" prefHeight="31.0" prefWidth="55.0" />
             <Button fx:id="btnAddSubject" layoutX="275.0" layoutY="14.0" mnemonicParsing="false" text="Add subject" />
             <Label layoutX="14.0" layoutY="65.0" text="Test title:" />
-            <TextField fx:id="tfTestTitle" layoutX="110.0" layoutY="60.0" promptText="Input test title" />
+            <TextField fx:id="tfTestTitle" layoutX="110.0" layoutY="60.0" prefHeight="31.0" prefWidth="491.0" promptText="Input test title" />
             <Button fx:id="btnRefresh" layoutX="387.0" layoutY="14.0" mnemonicParsing="false" text="Refresh" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="269.0" prefWidth="712.0">

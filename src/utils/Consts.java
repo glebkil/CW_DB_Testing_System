@@ -17,7 +17,7 @@ public class Consts {
     private static final int MaxPasswordLength = 32;
     private static final int MinFullNameLength = 4;
     private static final int MaxFullNameLength = 64; 
-    private static final int MinSubjectLength = 4; 
+    private static final int MinSubjectLength = 2; 
     private static final int MaxSubjectLength = 64; 
     private static final String TeacherPassword= "293";    
     

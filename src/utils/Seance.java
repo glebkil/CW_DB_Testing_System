@@ -44,13 +44,17 @@ public class Seance {
         Validator.validateUserPassword(user, password);
         setCurrentUser(user);
         
-        StageConductor.getInstance().setPrimaryScene();
-
+        if(user.getRole().getName().equals("student")){
+            StageConductor.getInstance().BuildSceneOnPrimaryStage("studentForm.fxml", "Student panel");
+        } else if(user.getRole().getName().equals("teacher")){
+            StageConductor.getInstance().BuildSceneOnPrimaryStage("teacherForm.fxml", "Teacher panel");
+        } else if(user.getRole().getName().equals("admin")){
+            StageConductor.getInstance().BuildSceneOnPrimaryStage("adminForm.fxml", "Admin panel");
+        }     
     }
 
-    public void LogOut() throws Exception {
-        setCurrentUser(null);
-        
-        StageConductor.getInstance().setPrimaryScene();
+    public void LogOut(){
+        setCurrentUser(null);        
+        StageConductor.getInstance().BuildSceneOnPrimaryStage("RegistrationForm.fxml", "Authorisation");
     }
 }

@@ -24,6 +24,8 @@ public class Answer implements java.io.Serializable {
     public Answer() {
     }
 
+ 
+    
     public Answer(String id, Question question, String text, boolean isCorrect) {
         this.id = id;
         this.question = question;

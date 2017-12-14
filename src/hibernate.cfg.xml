@@ -46,8 +46,8 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/testsystem?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.generate_statistics">true</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.generate_statistics">false</property>
     <mapping class="Model.PassedTest"/>
     <mapping class="Model.Answer"/>
     <mapping class="Model.Role"/>

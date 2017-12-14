@@ -17,14 +17,15 @@
                      <children>
                         <Button fx:id="btnLogout" layoutX="512.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnLogout" text="Log Out" />
                         <Button fx:id="btnAddNewTest" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnAddNewTest" text="Add new test" />
-                        <Button fx:id="btnEditSelected" layoutX="140.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnEditSelected" text="Edit selected" />
+                        <Button fx:id="btnEditSelected" layoutX="130.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnEditSelected" text="Edit selected" />
                         <TableView fx:id="tvTestsTable" layoutX="14.0" layoutY="59.0" prefHeight="288.0" prefWidth="578.0">
                           <columns>
                             <TableColumn fx:id="tcSubject" prefWidth="94.0" text="Subject" />
                             <TableColumn fx:id="tcTitle" prefWidth="483.0" text="Title" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnRefresh" layoutX="261.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnRefresh" text="Refresh" />
+                        <Button fx:id="btnRefresh" layoutX="403.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnRefresh" prefWidth="71.0" text="Refresh" />
+                        <Button layoutX="246.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnDeleteSelected" text="Delete Selected" />
                      </children>
                   </AnchorPane>
             </content>
