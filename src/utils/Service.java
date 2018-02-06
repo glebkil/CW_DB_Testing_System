@@ -6,6 +6,7 @@
 package utils;
 
 import Model.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -22,6 +23,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.service.ServiceRegistry;
 
@@ -161,7 +164,7 @@ public class Service {
             return tests;
         }
     }
-    
+
     public List<User> getUsers() {
         Session session = sessionFactory.openSession();
         Transaction tx = null;
@@ -170,6 +173,33 @@ public class Service {
             Criteria cr = session.createCriteria(User.class);
             cr.add(Restrictions.eq("deleted", false));
             users = (List<User>) cr.list();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("super oops...");
+            System.out.println(e.getMessage());
+        } finally {
+            session.close();
+            return users;
+        }
+    }
+
+    public List<User> getStudents() {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        List<User> users = null;
+        try {
+            Criteria cr = session.createCriteria(User.class);
+            cr.createAlias("role", "roleAlias");
+            cr.add(Restrictions.eq("roleAlias.id", "e0c5c355-7965-4060-b379-a1697728dfd4"));
+            cr.add(Restrictions.eq("deleted", false));            
+            users = (List<User>) cr.list();
+            for(User u : users){
+                Hibernate.initialize(u.getPassedTests());
+            }
         } catch (HibernateException e) {
             if (tx != null) {
                 tx.rollback();

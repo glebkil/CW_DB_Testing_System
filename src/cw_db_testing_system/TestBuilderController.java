@@ -90,6 +90,10 @@ public class TestBuilderController implements Initializable {
         //0. Basic form-specific setup
         initHandlers();
         cbSubjects.setTooltip(new Tooltip("Select the subject of your test"));
+//        List<Question> lq = test.getQuestions();
+//        for(Question q : lq){
+//            q.setId(randomUUID().toString());
+//        }
 
         //1. Add subjects 
         populateSubjectsChoiceBox();
@@ -124,6 +128,7 @@ public class TestBuilderController implements Initializable {
 
     @FXML
     private void handleSaveTestButton(ActionEvent e) {
+
         //0. Check if everything has values
         saveCurentQuestionData();
         lbErrorMessage.setText("");
@@ -360,20 +365,33 @@ public class TestBuilderController implements Initializable {
             }
         }
 
-        Session session = Service.getSessionFactory().openSession();
-
-        Transaction tx = session.beginTransaction();
-        List<Answer> answers = currentQuestion.getAnswers();
-        for (Answer a : answers) {
-            Answer tempAns = (Answer) session.get(Answer.class, a.getId());
-            if (tempAns != null) {
-                session.delete(tempAns);
-            }
-        }
-        tx.commit();
-        session.close();
-
         currentQuestion.setAnswers(newAnswers);
+//        currentQuestion.setText(taQuestionText.getText());
+//        test.setTitle(tfTestTitle.getText());
+//        
+//
+//        ArrayList<Answer> newAnswers = new ArrayList<>();
+//        if (cbOneCorrectAnswer.isSelected()) {
+//            newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer1.getText(), rb1.isSelected()));
+//            newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer2.getText(), rb2.isSelected()));
+//            if (cbNumOfAnswers.getSelectionModel().getSelectedItem() > 2) {
+//                newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer3.getText(), rb3.isSelected()));
+//            }
+//            if (cbNumOfAnswers.getSelectionModel().getSelectedItem() > 3) {
+//                newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer4.getText(), rb4.isSelected()));
+//            }
+//        } else {
+//            newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer1.getText(), cb1.isSelected()));
+//            newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer2.getText(), cb2.isSelected()));
+//            if (cbNumOfAnswers.getSelectionModel().getSelectedItem() > 2) {
+//                newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer3.getText(), cb3.isSelected()));
+//            }
+//            if (cbNumOfAnswers.getSelectionModel().getSelectedItem() > 3) {
+//                newAnswers.add(new Answer(randomUUID().toString(), currentQuestion, tfAnswer4.getText(), cb4.isSelected()));
+//            }
+//        }
+//
+//        currentQuestion.setAnswers(newAnswers);
     }
 
     private void initCurrentQuestion() {
@@ -384,7 +402,7 @@ public class TestBuilderController implements Initializable {
     }
 
     private void addNewQuestionToTest() {
-        Question addedQuestion = new Question();
+        Question addedQuestion = new Question();        
         test.getQuestions().add(addedQuestion);
         addedQuestion.setTest(test);
         addedQuestion.setId(randomUUID().toString());

@@ -120,9 +120,10 @@ public class TestingController implements Initializable {
         } finally {
             session.close();
         }
-
+        List<PassedTest> ptl = new ArrayList<>();
+        ptl.add(passedTest);
         StageConductor.getInstance().BuildSceneOnNewStage("testStats.fxml",
-                "Test stat", new TestStatsController(passedTest));
+                "Test stat", new TestStatsController(ptl));
         Stage st = (Stage) spitPane.getScene().getWindow();
         st.close();
     }
@@ -131,11 +132,11 @@ public class TestingController implements Initializable {
     private void handleNextButton(ActionEvent e) {
         saveCurrentQuestionAnswerResult();
         saveToTempTest();
+        currentQuestionNumber++;
         if (currentQuestionNumber == test.getQuestions().size() - 1) {
             btnNext.setDisable(true);
-        } else {
-            currentQuestionNumber++;
         }
+
         btnPrevious.setDisable(false);
         currentQuestion = test.getQuestions().get(currentQuestionNumber);
         initForm();
@@ -200,7 +201,7 @@ public class TestingController implements Initializable {
         if (q == null || q.getAnswers().size() == 0) {
             return;
         }
-        if(givenAnswerResults.size() <= currentQuestionNumber){
+        if (givenAnswerResults.size() <= currentQuestionNumber) {
             return;
         }
         if (q.getHasOnlyOneCorrectAnswer()) {

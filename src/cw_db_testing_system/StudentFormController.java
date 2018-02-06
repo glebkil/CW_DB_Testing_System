@@ -10,6 +10,7 @@ import Model.Question;
 import Model.Test;
 import Model.User;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -88,8 +89,10 @@ public class StudentFormController implements Initializable {
         PassedTest selectedPassedTest = (PassedTest) session.get(PassedTest.class, ptdo.getId());
 
         session.close();
+        List<PassedTest> ptl = new ArrayList<>();
+        ptl.add(selectedPassedTest);
         StageConductor.getInstance().BuildSceneOnNewStage("testStats.fxml",
-                "Test stat", new TestStatsController(selectedPassedTest));
+                "Test stat", new TestStatsController(ptl));
     }
 
     @FXML

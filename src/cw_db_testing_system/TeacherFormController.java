@@ -5,6 +5,7 @@
  */
 package cw_db_testing_system;
 
+import Model.PassedTest;
 import Model.Question;
 import Model.Subject;
 import Model.Test;
@@ -28,8 +29,10 @@ import javafx.scene.image.ImageView;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import utils.PassedTestDataObserver;
 import utils.Seance;
 import utils.Service;
+import utils.StudentsObserver;
 import utils.TestDataObserver;
 
 /**
@@ -47,10 +50,23 @@ public class TeacherFormController implements Initializable {
 
     @FXML
     private TableColumn<TestDataObserver, String> tcTitle;
-    
+
     @FXML
     private Button btnRefresh;
 
+    @FXML
+    private TableView<StudentsObserver> tvStat;
+
+    @FXML
+    private TableColumn<StudentsObserver, String> tcName, tcLogin;
+
+    @FXML
+    private TableColumn<StudentsObserver, Double> tcAvgMark, tcMinMark, tcMaxMark;
+
+    @FXML 
+    private TableColumn<StudentsObserver, Integer> tcTotalTestsPassed;        
+    
+    ObservableList<StudentsObserver> observableStudents;
     ObservableList<TestDataObserver> observableTests;
 
     /**
@@ -61,7 +77,7 @@ public class TeacherFormController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Table
+        //Tests Table
         observableTests = FXCollections.observableArrayList();
         tcSubject.setCellValueFactory(new PropertyValueFactory<>("testSubject"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("testTitle"));
@@ -73,6 +89,49 @@ public class TeacherFormController implements Initializable {
         tvTestsTable.setItems(observableTests);
         tvTestsTable.getColumns().clear();
         tvTestsTable.getColumns().addAll(tcSubject, tcTitle);
+        
+        //Student stat table
+        observableStudents = FXCollections.observableArrayList();
+        tcName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tcLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
+        tcAvgMark.setCellValueFactory(new PropertyValueFactory<>("avgmark"));
+        tcMinMark.setCellValueFactory(new PropertyValueFactory<>("minMark"));
+        tcMaxMark.setCellValueFactory(new PropertyValueFactory<>("maxMark"));
+        tcTotalTestsPassed.setCellValueFactory(new PropertyValueFactory<>("totalTestsPassed"));
+        
+        List<User> students = Service.getInstane().getStudents();
+        
+        for (User st : students) {
+            observableStudents.add(new StudentsObserver(st));
+        }
+        tvStat.setItems(observableStudents);
+        tvStat.getColumns().clear();
+        tvStat.getColumns().addAll(tcName, tcLogin, tcAvgMark,tcMinMark,tcMaxMark,tcTotalTestsPassed);
+    }
+
+    @FXML
+    private void handleBtnFullStat() {
+        StudentsObserver sto = tvStat.getSelectionModel().getSelectedItem();
+        if (sto == null) {
+            return;
+        }
+        Session session = Service.getSessionFactory().openSession();
+        User selectedStudent = (User) session.get(User.class, sto.getId());
+        Hibernate.initialize(selectedStudent.getPassedTests());
+        
+        session.close();
+        
+        StageConductor.getInstance().BuildSceneOnNewStage("testStats.fxml",
+                "Test stat", new TestStatsController(selectedStudent.getPassedTests()));
+    }
+
+    @FXML
+    void handleBtnRefreshStats() {
+        List<User> students = Service.getInstane().getStudents();
+        observableStudents.clear();
+        for (User st : students) {
+            observableStudents.add(new StudentsObserver(st));
+        }
     }
 
     @FXML
@@ -89,7 +148,7 @@ public class TeacherFormController implements Initializable {
     }
 
     @FXML
-    private void handleBtnDeleteSelected(){
+    private void handleBtnDeleteSelected() {
         TestDataObserver tdo = tvTestsTable.getSelectionModel().getSelectedItem();
         if (tdo == null) {
             return;
@@ -110,7 +169,7 @@ public class TeacherFormController implements Initializable {
         session.close();
         handleBtnRefresh();
     }
-    
+
     @FXML
     private void handleBtnEditSelected() {
         TestDataObserver tdo = tvTestsTable.getSelectionModel().getSelectedItem();

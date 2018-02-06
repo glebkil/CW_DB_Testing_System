@@ -43,9 +43,8 @@ public class Test implements java.io.Serializable {
         subject = t.getSubject();
         user = t.getUser();
         title = t.getTitle();
-        deleted = t.deleted;
-        questions = t.getQuestions();
-        passedTests = t.getPassedTests();
+        deleted = t.deleted;        
+        questions = new ArrayList<Question>(t.getQuestions().size());
     }
     
     public Test(Subject subject, User user, String title) {

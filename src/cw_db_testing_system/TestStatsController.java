@@ -8,6 +8,7 @@ package cw_db_testing_system;
 import Model.PassedTest;
 import Model.Test;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,11 +23,13 @@ public class TestStatsController implements Initializable {
 
     @FXML
     private TextArea taTestStats;
+    String output;
 
-    PassedTest passedTest;
-
-    public TestStatsController(PassedTest pt) {
-        passedTest = pt;
+    public TestStatsController(List<PassedTest> ptList) {        
+        output = new String("");
+        for(PassedTest pt : ptList){
+            output += formString(pt);
+        }
     }
 
     /**
@@ -34,10 +37,10 @@ public class TestStatsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        taTestStats.setText(formString());
+        taTestStats.setText(output);
     }
 
-    private String formString() {
+    private String formString(PassedTest passedTest) {
         Test test = passedTest.getTest();
         String out = new String("Test \"" + test.getTitle() + "\"\n On "
                 + test.getSubject().getTitle() + " subject\n"
@@ -45,7 +48,7 @@ public class TestStatsController implements Initializable {
                 + "On "
                 + passedTest.getTestDate().toString()
                 + "\nScore is " + passedTest.getMark()
-                + " out of 100");
+                + " out of 100\n\n");
         return out;
     }
 }

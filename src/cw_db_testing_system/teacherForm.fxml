@@ -30,16 +30,26 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Management">
+            <Tab text="Stats">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tvStat" layoutX="14.0" layoutY="54.0" prefHeight="293.0" prefWidth="580.0">
+                          <columns>
+                            <TableColumn fx:id="tcName" prefWidth="108.0" text="Name" />
+                            <TableColumn fx:id="tcLogin" prefWidth="97.0" text="Login" />
+                              <TableColumn fx:id="tcAvgMark" prefWidth="76.0" text="Avg Mark" />
+                              <TableColumn fx:id="tcMinMark" prefWidth="82.0" text="Min Mark" />
+                              <TableColumn fx:id="tcMaxMark" text="Max Mark" />
+                              <TableColumn fx:id="tcTotalTestsPassed" prefWidth="136.0" text="Total Tests Passed" />
+                          </columns>
+                        </TableView>
+                        <Button layoutX="521.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnLogout" text="Log Out" />
+                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnFullStat" text="See full stat " />
+                        <Button layoutX="130.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnRefreshStats" text="Refresh" />
+                     </children></AnchorPane>
               </content>
             </Tab>
-          <Tab text="Reports">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
         </tabs>
       </TabPane>
    </children>
